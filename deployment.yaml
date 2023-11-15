@@ -1,42 +1,47 @@
 apiVersion: apps/v1
-
 kind: Deployment
 
 metadata:
   name: spring-boot-app
+  labels:
+    app: spring-boot-app
 
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: spring-boot-app
-
+  strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: spring-boot-app
-
     spec:
       containers:
-        - name: spring-boot-container
-          image: bbiegajlo/micro-experiment:1.0.0
-          ports:
-            - containerPort: 8080
+        - image: bbiegajlo/micro-experiment:1.0.0
+          name: spring-boot-app
+          resources: {}
+
+status: {}
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-boot-service
+  creationTimestamp: null
+  name: spring-boot-app
   labels:
     app: spring-boot-app
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 8080
+    - name: 80-8080
+      port: 80
       targetPort: 8080
       protocol: TCP
   selector:
-    app: spring-boot
+    app: spring-boot-app
+status:
+  loadBalancer: {}
