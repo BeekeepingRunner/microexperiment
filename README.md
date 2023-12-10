@@ -1,5 +1,6 @@
-Steps to deploy app in microk8s cluster on localhost:8080:
+Steps to deploy app in minikube cluster
 
 1. Open terminal in root project folder
-2. `microk8s kubectl create -f deployment.yaml`
-3. `microk8s kubectl port-forward service/spring-boot-app 8080:80`
+2. `kubectl apply -f deployment.yaml`
+3. Check your cluster IP: `minikube ip`
+4. Connect with app on the: `<minikube ip>:31111`
